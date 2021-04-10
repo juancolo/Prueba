@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('empleados', EmpleadosController::class );
+Route::resource('empleados', EmpleadosController::class)
+    ->except('show');
+

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEmpleadosRequest;
+use App\Http\Requests\UpdateEmpleadosRequest;
 use App\Models\Area;
-use App\Models\Empleados;
 use App\Models\Roles;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Models\Empleados;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\CreateEmpleadosRequest;
+use Illuminate\Contracts\Foundation\Application;
 
 class EmpleadosController extends Controller
 {
@@ -20,7 +21,7 @@ class EmpleadosController extends Controller
     {
         return view('empleados.index')->with([
             'empleados' => Empleados::with('area')
-                ->select(['nombre', 'email', 'sexo', 'area_id', 'boletin' ])->get()
+                ->select(['nombre', 'email', 'sexo', 'area_id', 'boletin', 'id' ])->get()
         ]);
     }
 
@@ -36,9 +37,12 @@ class EmpleadosController extends Controller
             ]);
     }
 
-    public function store(CreateEmpleadosRequest $request)
+    /**
+     * @param CreateEmpleadosRequest $request
+     * @return RedirectResponse
+     */
+    public function store(CreateEmpleadosRequest $request): RedirectResponse
     {
-        //dd($request->all());
         $empleado = Empleados::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
@@ -55,13 +59,35 @@ class EmpleadosController extends Controller
             ->with('success', 'el empleado '. $empleado->nombre.' ha sido creado');
     }
 
-    public function update()
+    public function edit(Empleados $empleado)
     {
-        return view('empleados.create');
+        return view('empleados.edit')
+            ->with([
+                'empleado' => $empleado->load('roles'),
+                'areas' => Area::select(['id', 'name'])->get(),
+                'roles' => Roles::select(['id', 'name'])->get()
+            ]);
     }
 
-    public function delete()
+    public function update(Empleados $empleado, UpdateEmpleadosRequest $request)
     {
-        return view('empleados.create');
+        $empleado->update([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'sexo' => $request->sexo,
+            'area_id' => $request->area_id,
+            'descripcion' => $request->descripcion,
+            'boletin' => $request->has('boletin') ? 1: 0,
+        ]);
+        $empleado->roles()->sync($request->roles);
+        return redirect()->route('empleados.index')
+        ->with('success', 'el empleado '. $empleado->nombre.' ha actualizado correctamente');
+    }
+
+    public function destroy(Empleados $empleado)
+    {
+        $empleado->delete();
+        return redirect()->route('empleados.index')
+            ->with('success', 'Se ha eliminado correctamente a '.$empleado->nombre );
     }
 }

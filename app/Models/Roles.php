@@ -11,6 +11,6 @@ class Roles extends Model
 
     public function empleados()
     {
-        return $this->belongsToMany(Empleados::class, 'empleado_role')->withPivot('empleado_id');
+        return $this->belongsToMany(Empleados::class, 'empleado_role')->withPivot('empleados_id');
     }
 }

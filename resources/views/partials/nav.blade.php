@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">@lang('User Create')<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('empleados.index')}}">@lang('Empleados')<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">@lang('Activities')</a>
+                <a class="nav-link" href="{{route('empleados.create')}}">@lang('Crear Empleado')</a>
             </li>
         </ul>
     </div>

@@ -2,6 +2,7 @@
 
 @section('middle-page')
     <body>
+
     <div class="container">
         <div class="card-header">
             @lang('Tabla de empleados')
@@ -37,17 +38,27 @@
                                 </tr>
                                 <td>{{$empleado->nombre}}</td>
                                 <td>{{$empleado->email}}</td>
-                                <td>{{$empleado->sexo}}</td>
+                                <td>{{\App\Constants\GenderConstants::GENDERS[$empleado->sexo]}}</td>
                                 <td>{{$empleado->area->name}}</td>
-                                <td>{{$empleado->boletin}}</td>
-                                <td></td>
+                                <td>{{\App\Constants\BoletinStatus::BOLETIN_STATUSES[$empleado->boletin]}}</td>
+                                <td><a type="button" class="btn btn-primary" href="{{route('empleados.edit', compact('empleado'))}}"> @lang('Editar')</a> </td>
+                                <td>
+                                    <form action="{{route('empleados.destroy', $empleado)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('¿Seguro desea elminar a {{$empleado->nombre}} ?')">
+                                            @lang('Eliminar')
+                                        </button>
+                                    </form>
+                                </td>
+
                                 </tr>
                                 </tbody>
                             @endforeach
                         </table>
                     </table>
                 </div>
-                @include('partials.__success')
                 @include('partials.__alert')
             </div>
         </div>
