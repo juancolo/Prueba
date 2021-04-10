@@ -7,16 +7,18 @@
                 Featured
             </div>
             <div class="card-body">
-                <form action="">
+                <form action="{{route('empleados.store')}}" method="post" id="create_user">
+                    @csrf()
+                    @method('POST')
                     <div class="form-group row col-sm-10">
-                        <label for="full_name" class="col-sm-2 col-form-label">@lang('Full Name')</label>
+                        <label for="nombre" class="col-sm-2 col-form-label">@lang('Nombre Completo')</label>
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
-                                   id="full_name"
-                                   name="full_name"
-                                   placeholder="{{'Full Name'}}"
-                                    value="{{old('full_name')}}">
+                                   id="nombre"
+                                   name="nombre"
+                                   placeholder="{{'Nombre Completo'}}"
+                                    value="{{old('nombre')}}">
                         </div>
                     </div>
                     <div class="form-group row col-sm-10">
@@ -31,27 +33,81 @@
                         </div>
                     </div>
                     <div class="form-group row col-sm-10">
-                    <label for="gender" class="col-2 col-form-label">@lang('Gender')</label>
-                        <div class="form-check row col-sm-10">
-                            <div class="form-check row col-sm-10">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label for="sexo" class="col-2 col-form-label">@lang('Gender')</label>
+                        <div class="form-check col-sm-10">
+                            <div class="form-check col-sm-10">
+                                <input class="form-check-input" type="radio" id="sexo" name="sexo" value=0>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Default radio
                                 </label>
                             </div>
-                            <div class="form-check row col-sm-10">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <div class="form-check col-sm-10">
+                                <input class="form-check-input" type="radio" id="sexo" name="sexo" value=1>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Default radio
                                 </label>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row col-sm-10">
+                        <label for="area_id" class="col-2 col-form-label">@lang('Area')</label>
+                        <div class="form-check col-sm-10">
+                            <select class="form-control" name="area_id" id="area_id">
+                                <option value="" selected>{{""}}</option>
+                                @foreach($areas as $area)
+                                    <option value="{{old('area', $area->id)}}">{{$area->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row col-sm-10">
+                        <label for="descripcion" class="col-sm-2 col-form-label">@lang('Descripción')</label>
+                        <div class="col-sm-10">
+                            <textarea
+                                   class="form-control"
+                                   id="descripcion"
+                                   name="descripcion"
+                                   placeholder="{{'Descripción'}}"
+                                   value="{{old('descripcion')}}"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row col-sm-10">
+                        <label for="gender" class="col-2 col-form-label">@lang('Boletín')</label>
+                        <div class="form-check col-sm-10">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="boletin" name="boletin">
+                                <label class="form-check-label" for="boletin">
+                                    @lang('Recibir boletín informativo')
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row col-sm-10">
+                        <label for="roles" class="col-2 col-form-label">@lang('Roles')</label>
+                        <div class="form-check col-sm-10">
+
+                            @foreach($roles as $rol)
+
+                                <div class="col-sm-10">
+                                    <label class="checkbox-inline " for="roles[]">
+                                        <input name="roles[]" type="checkbox" value="{{ $rol->id }}"
+
+                                        > {{ $rol->name }}
+                                    </label>
+                                </div>
+
+                            @endforeach
+                        </div>
+                    </div>
+
                 </form>
 
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="d-grid gap-2 col-4 mx-auto">
+                    <button class="btn btn-primary" type="submit" form="create_user"> @lang('Crear Empleado')</button>
+                </div>
             </div>
         </div>
     </div>

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Area;
+use App\Models\Roles;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AreaFactory extends Factory
+class RolesFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Area::class;
+    protected $model = Roles::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class AreaFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            //
         ];
     }
 }
