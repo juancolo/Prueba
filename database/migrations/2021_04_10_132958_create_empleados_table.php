@@ -17,11 +17,15 @@ class CreateEmpleadosTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->string('nombre', 124);
             $table->string('email', 124);
-            $table->char('sexo',1);
+            $table->char('sexo');
             $table->unsignedBigInteger('area_id');
             $table->integer('boletin');
             $table->text('descripcion');
             $table->timestamps();
+
+            $table->foreign('area_id')->references('id')->on('areas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

@@ -38,7 +38,7 @@
                                 <td>{{$empleado->nombre}}</td>
                                 <td>{{$empleado->email}}</td>
                                 <td>{{$empleado->sexo}}</td>
-                                <td>{{$empleado->area}}</td>
+                                <td>{{$empleado->area->name}}</td>
                                 <td>{{$empleado->boletin}}</td>
                                 <td></td>
                                 </tr>

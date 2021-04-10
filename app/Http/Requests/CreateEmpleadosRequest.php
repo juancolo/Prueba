@@ -24,8 +24,8 @@ class CreateEmpleadosRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'email' => 'required|email:rfc, dns',
+            'nombre' => ['required'],
+            'email' => 'required|email:rfc',
             'area_id' => ['required'],
             'sexo' => ['required'],
             'descripcion' => ['required'],

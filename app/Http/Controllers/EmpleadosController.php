@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateEmpleadosRequest;
 use App\Models\Area;
 use App\Models\Empleados;
 use App\Models\Roles;
@@ -18,7 +19,8 @@ class EmpleadosController extends Controller
     public function index(): View
     {
         return view('empleados.index')->with([
-            'empleados' => Empleados::select(['nombre', 'email', 'sexo', 'area_id', 'boletin' ])->get()
+            'empleados' => Empleados::with('area')
+                ->select(['nombre', 'email', 'sexo', 'area_id', 'boletin' ])->get()
         ]);
     }
 
@@ -34,11 +36,23 @@ class EmpleadosController extends Controller
             ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateEmpleadosRequest $request)
     {
-        dd($request->has('boletin'));
-        Empleados::create($request->all());
-        return redirect()->route('empleados.index');
+        //dd($request->all());
+        $empleado = Empleados::create([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'sexo' => $request->sexo,
+            'area_id' => $request->area_id,
+            'descripcion' => $request->descripcion,
+            'boletin' => $request->has('boletin') ? 1: 0,
+        ]);
+
+        $empleado->roles()->attach($request->roles);
+        $empleado->save();
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'el empleado '. $empleado->nombre.' ha sido creado');
     }
 
     public function update()
