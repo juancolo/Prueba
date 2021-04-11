@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateEmpleadosRequest;
 use App\Models\Area;
 use App\Models\Roles;
 use App\Models\Empleados;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
+use App\Http\Requests\UpdateEmpleadosRequest;
 use App\Http\Requests\CreateEmpleadosRequest;
 use Illuminate\Contracts\Foundation\Application;
 
@@ -69,7 +69,12 @@ class EmpleadosController extends Controller
             ]);
     }
 
-    public function update(Empleados $empleado, UpdateEmpleadosRequest $request)
+    /**
+     * @param Empleados $empleado
+     * @param UpdateEmpleadosRequest $request
+     * @return RedirectResponse
+     */
+    public function update(Empleados $empleado, UpdateEmpleadosRequest $request): RedirectResponse
     {
         $empleado->update([
             'nombre' => $request->nombre,
@@ -84,7 +89,12 @@ class EmpleadosController extends Controller
         ->with('success', 'el empleado '. $empleado->nombre.' ha actualizado correctamente');
     }
 
-    public function destroy(Empleados $empleado)
+    /**
+     * @param Empleados $empleado
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(Empleados $empleado): RedirectResponse
     {
         $empleado->delete();
         return redirect()->route('empleados.index')

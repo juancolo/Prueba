@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\GenderConstants;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEmpleadosRequest extends FormRequest
 {
@@ -24,11 +26,13 @@ class UpdateEmpleadosRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => ['required'],
-            'email' => 'required|email:rfc',
-            'area_id' => ['required'],
-            'sexo' => ['required'],
-            'descripcion' => ['required'],
+            'nombre' => ['required', 'min:10','max:124','regex:/^[^\{\}\[\]\;\<\>]*$/'],
+            'email' => ['required','email:rfc',Rule::unique('empleados')->ignore($this->empleado)],
+            'area_id' => ['numeric','exists:areas,id'],
+            'roles' => 'required|array',
+            'roles.*' => 'exists:roles,id',
+            'sexo' => ['required','numeric',Rule::in(GenderConstants::MUJER, GenderConstants::HOMBRE)],
+            'descripcion' => ['required', 'regex:/^[^\{\}\[\]\;\<\>]*$/'],
         ];
     }
 }
