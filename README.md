@@ -46,10 +46,13 @@ work with your database.
 
 - Use the package manager composer and npm to install:
   
-    -`npm install`        
+    -`npm install`
+  
     -`composer install`
   
-    
+    -`npm run watch`
+
+
 - Run all the migrations and seeders of the web application.
     -`php artisan migrate:fresh --seed`
   
