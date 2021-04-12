@@ -1842,6 +1842,8 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./create */ "./resources/js/create.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -1872,6 +1874,40 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/create.js":
+/*!********************************!*\
+  !*** ./resources/js/create.js ***!
+  \********************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  $('#create_user').validate({
+    rules: {
+      nombre: {
+        required: true,
+        maxlength: 124
+      },
+      email: {
+        required: true,
+        maxlength: 124,
+        email: true
+      }
+    },
+    message: {
+      nombre: {
+        required: 'El campo nombre es obligatorio',
+        maxlength: 'El campd de Nombre debe tener entre 10 a 124 caracteres'
+      },
+      email: {
+        required: 'El campo nombre es obligatorio',
+        maxlength: 'El campd de Nombre debe tener entre 10 a 124 caracteres'
+      }
+    }
+  });
+});
 
 /***/ }),
 

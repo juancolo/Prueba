@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Featured
+                <h5>@lang('Creación de Empleados')</h5>
             </div>
             <div class="card-body">
                 <form action="{{route('empleados.store')}}" method="post" id="create_user">
@@ -68,7 +68,7 @@
                                    id="descripcion"
                                    name="descripcion"
                                    placeholder="{{'Descripción'}}"
-                                   value="{{old('descripcion')}}"></textarea>
+                                   ></textarea>
                         </div>
                     </div>
 
@@ -94,7 +94,6 @@
                                 <div class="col-sm-10">
                                     <label class="checkbox-inline " for="roles[]">
                                         <input name="roles[]" type="checkbox" value="{{ $rol->id }}"
-
                                         > {{ $rol->name }}
                                     </label>
                                 </div>
@@ -111,4 +110,37 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function (){
+
+            $('#create_user').validate({
+                rules:{
+                    nombre:{
+                        required: true,
+                        maxlength: 124
+                    },
+                    email:{
+                        required: true,
+                        maxlength: 124,
+                        email: true
+                    },
+                    boletin:{
+                        required: true,
+                    },
+                    sexo:{
+                        required: true,
+                    },
+                    area_id:{
+                        required: true,
+                    },
+                    descripcion:{
+                        required: true,
+                    },
+                    roles:{
+                        required: true,
+                    },
+                },
+            });
+        })
+    </script>
 @endsection
